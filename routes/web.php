@@ -38,11 +38,14 @@ Route::middleware('auth', 'verified', 'petugas')->group(function () {
         return view('petugas.index');
     })->name('petugas');
 });
+// SISWA DASHBOARD ROUTES
 Route::middleware('auth', 'verified', 'siswa')->group(function () {
-    Route::get('/dashboard/siswa', function () {
-        return view('siswa.index');
-    })->name('siswa');
+    Route::get('/dashboard/siswa', [\App\Http\Controllers\DashSiswaController::class, 'tampildashsiswa'])->name('siswa');
     Route::post('/dashboard/siswa', [\App\Http\Controllers\SiswaController::class, 'biodatasimpan'])->name('simpan-biodata');
+    Route::put('/dashboard/siswa/biodata/up', [\App\Http\Controllers\SiswaController::class, 'biodataupdate'])->name('update-biodata');
+    Route::get('dashboard/siswa/foto', [\App\Http\Controllers\SiswaController::class, 'foto'])->name('up-foto');
+    Route::post('dashboard/siswa/foto', [\App\Http\Controllers\SiswaController::class, 'fotoup'])->name('up-foto');
+    Route::put('dashboard/siswa/fotoup', [\App\Http\Controllers\SiswaController::class, 'fotoupdate'])->name('up-foto-update');
 });
 Route::middleware('auth', 'verified', 'adminorpetugas')->group(function () {
     Route::get('dashboard/siswa/daftar', [\App\Http\Controllers\SiswaController::class, 'index'])->name('siswapage');
